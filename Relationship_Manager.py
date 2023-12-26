@@ -31,8 +31,10 @@ def generate_rm_data(branch_ids, existing_rm_ids):
     is_independent = fake.boolean()
     license = ""
     registration_state = ""
-    primary_id = random.choice([None] + existing_rm_ids)
-    secondary_id = random.choice([None] + existing_rm_ids)
+    
+    # Ensure primary_id and secondary_id are different existing_rm_ids
+    primary_id, secondary_id = random.sample(existing_rm_ids, k=2)
+    
     other_id = None
     is_employee = fake.boolean()
     employee_id = generate_rm_id() if is_employee else None
