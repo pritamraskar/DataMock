@@ -133,7 +133,8 @@ email_data_list = []
 address_data_list = []
 
 for i in range(1000):
-    client_id = fake.uuid4()
+    #client_id = fake.uuid4()
+    client_id = str(fake.uuid4())[:8].upper()
     client_data_list.append(generate_client_data(client_id))
     phone_data, email_data, address_data = generate_contact_data(client_id)
     phone_data_list.append(phone_data)
@@ -142,7 +143,7 @@ for i in range(1000):
 
 
 # Write data to CSV files
-"""def write_to_csv(data_list, file_name, headers):
+def write_to_csv(data_list, file_name, headers):
     with open(file_name, 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=headers)
         writer.writeheader()
@@ -153,7 +154,7 @@ write_to_csv(client_data_list, './OutputFiles/Client.csv', client_data_list[0].k
 write_to_csv(phone_data_list, './OutputFiles/Client_Phone.csv', phone_data_list[0].keys())
 write_to_csv(email_data_list, './OutputFiles/Client_Email.csv', email_data_list[0].keys())
 write_to_csv(address_data_list, './OutputFiles/Client_Address.csv', address_data_list[0].keys())
-"""
+
 
 # Write data to JSON files
 def write_to_json(data_list, file_name):

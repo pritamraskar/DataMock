@@ -1,4 +1,5 @@
 import json
+import csv
 import random
 from faker import Faker
 
@@ -73,7 +74,7 @@ branch_ids_example = load_branch_data('./OutputFiles/Branch.json')  # Update the
 existing_rm_ids_example = ['RM{:03}'.format(i) for i in range(1, 11)]
 
 # Generate 100 rows of Relationship Manager data
-rm_data_list_example = generate_relationship_manager_data(100, branch_ids_example, existing_rm_ids_example)
+rm_data_list_example = generate_relationship_manager_data(10000, branch_ids_example, existing_rm_ids_example)
 
 # Write data to JSON file
 def write_to_json(data_list, file_name):
@@ -82,3 +83,13 @@ def write_to_json(data_list, file_name):
 
 # Write data to JSON file inside the "./OutputFiles/" directory
 write_to_json(rm_data_list_example, './OutputFiles/Relationship_Manager.json')  # Update the path
+
+
+# Write data to CSV file
+csv_file_path = './OutputFiles/Relationship_Manager.csv'
+csv_headers = list(rm_data_list_example[0].keys())
+
+with open(csv_file_path, 'w', newline='') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=csv_headers)
+    writer.writeheader()
+    writer.writerows(rm_data_list_example)
