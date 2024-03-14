@@ -58,12 +58,12 @@ for i in range(15000):
     branch_data_list.append(generate_branch_data(parent_branch_id))
 
 # Write data to JSON file
-json_file_path = './OutputFiles/Branch.json'
+json_file_path = '../OutputFiles/Branch.json'
 with open(json_file_path, 'w') as jsonfile:
     json.dump(branch_data_list, jsonfile, indent=2)
 
 # Write data to CSV file
-csv_file_path = './OutputFiles/Branch.csv'
+csv_file_path = '../OutputFiles/Branch.csv'
 csv_headers = list(branch_data_list[0].keys())
 
 with open(csv_file_path, 'w', newline='') as csvfile:
