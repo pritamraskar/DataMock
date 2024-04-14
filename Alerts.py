@@ -27,61 +27,60 @@ def generate_scenario_data():
     }
 
 def generate_focus_details():
-    focus_types = ["Technical", "Process"]
-    focus_names = ["Code Quality", "Delivery Efficiency"]
-    focus_descriptions = ["Measures the quality of the codebase", "Measures the efficiency of the delivery process"]
+    focus_types = ["Mutual Fund Short-Term Liquidation", "Suspicious Trading Activity"]
+    focus_names = ["Mutual Fund Short-Term Liquidation", "Suspicious Trading Activity"]
+    focus_descriptions = ["An early liquidation of a mutual fund has occurred outside the guidelines.", "Unusual trading patterns or transactions suggesting potential market abuse, manipulation, or insider trading, deviating from standard market practices"]
     
     focus_details = []
     for focus_type, focus_name, focus_description in zip(focus_types, focus_names, focus_descriptions):
         scenarios = []
-        if focus_type == "Technical":
+        if focus_type == "Mutual Fund Short-Term Liquidation":
             scenarios = [
                 {
                     "Scenario_Id": "SC001",
-                    "Scenario_Name": "Unit Test Coverage",
+                    "Scenario_Name": "Mutual Fund Short-Term Liquidation - Share Class B",
+                    "Scenario_Description": "An early liquidation of a mutual fund has occurred and the client has incurred a CDSC",
                     "Threshold_Value": 80,
                     "Actual_Value": 90,
                     "Score": 100
                 },
                 {
                     "Scenario_Id": "SC002",
-                    "Scenario_Name": "Code Duplication",
-                    "Threshold_Value": 15,
-                    "Actual_Value": 10,
-                    "Score": 90
-                },
-                {
-                    "Scenario_Id": "SC003",
-                    "Scenario_Name": "Code Complexity",
-                    "Threshold_Value": 20,
-                    "Actual_Value": 18,
-                    "Score": 65
+                    "Scenario_Name": "Mutual Fund Short-Term Liquidation - Share Class C",
+                    "Scenario_Description": "An early liquidation of a mutual fund has occurred in C shares and the client has incurred a CDSC",
+                    "Threshold_Value": 80,
+                    "Actual_Value": 90,
+                    "Score": 100
                 }
             ]
-        elif focus_type == "Process":
+        elif focus_type == "Suspicious Trading Activity":
             scenarios = [
                 {
                     "Scenario_Id": "SC004",
-                    "Scenario_Name": "Lead Time",
+                    "Scenario_Name": "Abnormal Price Movements",
+                    "Scenario_Description": "Sudden and significant price movements in a security with no apparent news or fundamental reason, potentially indicating market manipulation or insider trading.",
                     "Threshold_Value": 10,
                     "Actual_Value": 8,
                     "Score": 80
                 },
                 {
                     "Scenario_Id": "SC005",
-                    "Scenario_Name": "Deployment Frequency",
+                    "Scenario_Name": "Front-Running",
+                    "Scenario_Description": "A trader executes orders on a security based on advanced knowledge of pending trades from a client, typically to benefit from the anticipated price movement, which is illegal and unethical.",
                     "Threshold_Value": 4,
                     "Actual_Value": 3,
                     "Score": 70
                 },
                 {
                     "Scenario_Id": "SC006",
-                    "Scenario_Name": "Change Failure Rate",
+                    "Scenario_Name": "Insider Trading",
+                    "Scenario_Description": "Trading in a security based on material, non-public information about the security, in violation of securities laws.",
                     "Threshold_Value": 5,
                     "Actual_Value": 3,
                     "Score": 75
                 }
             ]
+ 
         
         total_score = sum(scenario["Score"] for scenario in scenarios)
         focus_detail = {
@@ -104,13 +103,13 @@ def generate_running_numbers():
 running_numbers = generate_running_numbers()
 
 def generate_alert_data(num_records, branch_ids):
-    alert_types = ["Type1", "Type2", "Type3"]
-    status_ids = ["Status1", "Status2", "Status3"]
+    alert_types = ["Trade_Review"]
+    status_ids = ["Ready for Analysis", "In Progress", "Confirmed", "False Positive", "Closed", "Escalated", "Under Review", "Pending"]
     business_units = branch_ids
-    business_unit_families = ["Family1", "Family2", "Family3"]
-    business_unit_families_previous = ["PreviousFamily1", "PreviousFamily2", "PreviousFamily3"]
-    details = ["Detail1", "Detail2", "Detail3"]
-    states = ["State1", "State2", "State3"]
+    business_unit_families = ["[Firm:US:East Regon:Branch1]", "[Firm:US:West Regon:Branch2]", "[Firm:US:South Regon:Branch3]"]
+    business_unit_families_previous = ["[Firm:US:East Regon:Branch1]", "[Firm:US:West Regon:Branch2]", "[Firm:US:South Regon:Branch3]"]
+    details = ["Mutual Fund liquidated by client ABC before maturity. ", "Client XYZ has performed Suspicious Trading Activity"]
+    states = ["Ready for Analysis", "In Progress", "Confirmed", "False Positive", "Closed", "Escalated", "Under Review", "Pending"]
     business_dates = [fake.date_between(start_date="-3y", end_date="today") for _ in range(num_records)]
     create_dates = [fake.date_time_between_dates(datetime_start=datetime(2021, 1, 1), datetime_end=datetime(2023, 12, 31)).date()
                     for _ in range(num_records)]
@@ -130,12 +129,13 @@ def generate_alert_data(num_records, branch_ids):
             "business_unit_family": random.choice(business_unit_families),
             "business_unit_family_previous": random.choice(business_unit_families_previous),
             "details": random.choice(details),
-            "score": round(random.uniform(0, 100), 2),
+            "score": round(random.uniform(0, 100), 0),
             "state": random.choice(states),
             "business_date": random.choice(business_dates).strftime("%Y-%m-%d"),
             "create_date": random.choice(create_dates).strftime("%Y-%m-%d"),
             "last_update_date": random.choice(last_update_dates).strftime("%Y-%m-%d"),
-            "Focus_Details": generate_focus_details()
+            "Focus_Details": generate_focus_details(),
+            "Custom_Fields": "{\"extra_fields\":{\"Is_Centralized\":true,\"Is_Whitelist\":false,\"Customer_Info\":{\"Customer_Id\":\"C123\",\"Name\":\"John Doe\",\"Address\":\"123 Main St\",\"City\":\"New York\",\"State\":\"NY\",\"Zip\":\"10001\",\"Phone_Number\":\"555-123-4567\",\"Email\":\"john.doe@example.com\",\"Date_of_Birth\":\"1970-01-01\",\"Nationality\":\"American\"},\"Account_Suitability_Info\":{\"Account_Type\":\"Checking\",\"Risk_Tolerance\":\"Medium\",\"Investment_Goals\":\"Retirement\",\"Investment_Time_Horizon\":\"Long-term\",\"Investment Strategy\":\"Aggressive Growth\"},\"Account_Information\":{\"Account_Number\":\"987654321\",\"Account_Opened_Date\":\"2022-01-01\",\"Account_Balance\":100000.00,\"State\":\"California\",\"Branch\":\"Los Angeles\"},\"Trade_Information\":{\"Trade_ID\":\"TRADE123\",\"Trade_Date\":\"2024-03-24\",\"Trade_Execution_Date\":\"2024-03-24\",\"Trade_Type\":\"Buy\",\"Symbol\":\"AAPL\",\"Quantity\":100,\"Price\":150.00,\"Total_Amount\":15000.00,\"Trade_Status\":\"Executed\",\"Direction\":\"In\",\"Order_ID\":\"ORDER456\",\"Order_Date\":\"2024-03-24\",\"Order_Placed_By\":\"John Doe\",\"Is_Solicited\":true,\"Is_Descriptive\":false,\"Product_Name\":\"Apple Inc.\",\"Product_Symbol\":\"AAPL\",\"CUSIP\":\"037833100\",\"Commission\":10.00,\"Fee\":5.00,\"Focal_Entity\":\"ABC Corp\",\"Focus\":\"Growth\",\"Advisor_Id\":\"AD123\",\"Advisor_Name\":\"Jane Smith\"},\"Advisor_Information\":{\"Advisor_Id\":\"AD123\",\"Advisor_Name\":\"Jane Smith\"}}}"
         }
         alert_data_list.append(alert_data)
 
@@ -143,7 +143,7 @@ def generate_alert_data(num_records, branch_ids):
 
 # Example usage:
 branch_ids_example = load_branch_data('./OutputFiles/Branch.json')  # Update the path
-alert_data_list_example = generate_alert_data(1000, branch_ids_example)
+alert_data_list_example = generate_alert_data(100, branch_ids_example)
 
 # Write data to JSON file
 json_file_path = './OutputFiles/Alert.json'
